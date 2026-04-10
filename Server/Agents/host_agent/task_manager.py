@@ -6,9 +6,23 @@ ACTIVITIES_URL = "http://localhost:8003/run"
 async def run(payload):
     #Print what the host agent is sending
     print("Incoming payload:", payload)
-    flights = await call_agent(FLIGHT_URL, payload)
-    stay = await call_agent(STAY_URL, payload)
-    activities = await call_agent(ACTIVITIES_URL, payload)
+    try:
+        flights = await call_agent(FLIGHT_URL, payload)
+    except Exception as e:
+        print("flight agent call failed:", e)
+        flights = {"flights": "Flight service is currently unavailable."}
+
+    try:
+        stay = await call_agent(STAY_URL, payload)
+    except Exception as e:
+        print("stay agent call failed:", e)
+        stay = {"stay": "Stay service is currently unavailable."}
+
+    try:
+        activities = await call_agent(ACTIVITIES_URL, payload)
+    except Exception as e:
+        print("activities agent call failed:", e)
+        activities = {"activities": "Activities service is currently unavailable."}
     # Log outputs
     print("flights:", flights)
     print("stay:", stay)
@@ -19,6 +33,6 @@ async def run(payload):
     activities = activities if isinstance(activities, dict) else {}
     return {
         "flights": flights.get("flights", "No flights returned."),
-        "stay": stay.get("stays", "No stay options returned."),
+        "stay": stay.get("stay", "No stay options returned."),
         "activities": activities.get("activities", "No activities found.")
     }

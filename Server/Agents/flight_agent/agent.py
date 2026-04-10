@@ -4,6 +4,7 @@ from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
+import uuid
 
 
 flight_agent = Agent(
@@ -23,13 +24,13 @@ runner = Runner(
     session_service=session_service
 )
 USER_ID = "user_flight"
-SESSION_ID = "session_flight"
 
 async def execute(request):
-    session_service.create_session(
+    session_id = f"session_flight_{uuid.uuid4().hex}"
+    await session_service.create_session(
         app_name="flight_app",
         user_id=USER_ID,
-        session_id=SESSION_ID
+        session_id=session_id
     )
     prompt = (
         f"User is flying to {request['destination']} from {request['start_date']} to {request['end_date']}, "
@@ -37,7 +38,7 @@ async def execute(request):
         f"Respond in JSON format using the key 'flights' with a list of activity objects."
     )
     message = types.Content(role="user", parts=[types.Part(text=prompt)])
-    async for event in runner.run_async(user_id=USER_ID, session_id=SESSION_ID, new_message=message):
+    async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message):
         if event.is_final_response():
             response_text = event.content.parts[0].text
             try:

@@ -20,14 +20,17 @@ if st.button("Plan My Trip ✨"):
             "end_date": str(end_date),
             "budget": budget
         }
-        response = requests.post("http://localhost:8000/run", json=payload)
-        if response.ok:
-            data = response.json()
-            st.subheader("✈️ Flights")
-            st.markdown(data["flights"])
-            st.subheader("🏨 Stays")
-            st.markdown(data["stay"])
-            st.subheader("🗺️ Activities")
-            st.markdown(data["activities"])
-        else:
-            st.error("Failed to fetch travel plan. Please try again.")
+        try:
+            response = requests.post("http://localhost:8000/run", json=payload, timeout=60)
+            if response.ok:
+                data = response.json()
+                st.subheader("✈️ Flights")
+                st.markdown(data["flights"])
+                st.subheader("🏨 Stays")
+                st.markdown(data["stay"])
+                st.subheader("🗺️ Activities")
+                st.markdown(data["activities"])
+            else:
+                st.error("Failed to fetch travel plan. Please try again.")
+        except requests.RequestException:
+            st.error("Could not connect to host agent at http://localhost:8000/run. Start the host service and try again.")

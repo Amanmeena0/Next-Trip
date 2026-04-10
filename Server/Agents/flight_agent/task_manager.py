@@ -1,3 +1,3 @@
-from flight_agent.agent import execute
+from Agents.flight_agent.agent import execute
 async def run(payload):
     return await execute(payload)
