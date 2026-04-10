@@ -11,29 +11,30 @@ flight_agent = Agent(
     model=LiteLlm("openai/gpt-4o"),
     description="Suggest the best flights for the trip to the within the budget.",
     instruction=(
-        "Given the budget suggest some flights fromt the "
+        "Given the budget suggest some flights between the given cities and with flight Name, Price, Departure Time," \
+        "and discription about the flight. Keep the details consise and formated."
     )
 )
 
 session_service = InMemorySessionService()
 runner = Runner(
     agent=flight_agent,
-    app_name="activities_app",
+    app_name="flight_app",
     session_service=session_service
 )
-USER_ID = "user_activities"
-SESSION_ID = "session_activities"
+USER_ID = "user_flight"
+SESSION_ID = "session_flight"
 
 async def execute(request):
     session_service.create_session(
-        app_name="activities_app",
+        app_name="flight_app",
         user_id=USER_ID,
         session_id=SESSION_ID
     )
     prompt = (
         f"User is flying to {request['destination']} from {request['start_date']} to {request['end_date']}, "
-        f"with a budget of {request['budget']}. Suggest 2-3 activities, each with name, description, price estimate, and duration. "
-        f"Respond in JSON format using the key 'activities' with a list of activity objects."
+        f"with a budget of {request['budget']}. Suggest 2-3 flights, each with name,  Price, Departure Time, And discription about the activities. "
+        f"Respond in JSON format using the key 'flights' with a list of activity objects."
     )
     message = types.Content(role="user", parts=[types.Part(text=prompt)])
     async for event in runner.run_async(user_id=USER_ID, session_id=SESSION_ID, new_message=message):
@@ -41,12 +42,12 @@ async def execute(request):
             response_text = event.content.parts[0].text
             try:
                 parsed = json.loads(response_text)
-                if "activities" in parsed and isinstance(parsed["activities"], list):
-                    return {"activities": parsed["activities"]}
+                if "flights" in parsed and isinstance(parsed["flights"], list):
+                    return {"flights": parsed["flights"]}
                 else:
-                    print("'activities' key missing or not a list in response JSON")
-                    return {"activities": response_text}  # fallback to raw text
+                    print("'flights' key missing or not a list in response JSON")
+                    return {"flights": response_text}  # fallback to raw text
             except json.JSONDecodeError as e:
                 print("JSON parsing failed:", e)
                 print("Response content:", response_text)
-                return {"activities": response_text}  # fallback to raw text
+                return {"flights": response_text}  # fallback to raw text
