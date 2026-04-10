@@ -8,7 +8,7 @@ import json
 
 activities_agent = Agent(
     name="activities_agent",
-    model=LiteLlm("openai/gpt-4o"),
+    model=LiteLlm("gemini-3-flash-preview"),
     description="Suggests interesting activities for the user at a destination.",
     instruction=(
         "Given a destination, dates, and budget, suggest 2-3 engaging tourist or cultural activities. "

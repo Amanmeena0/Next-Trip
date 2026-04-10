@@ -8,7 +8,7 @@ import json
 
 stay_agent = Agent(
     name="stay_agent",
-    model=LiteLlm("gemini"),
+    model=LiteLlm("gemini-3-flash-preview"),
     description="Suggests interesting stay for the user at a destination.",
     instruction=(
         "Given a destination, dates, and budget, suggest 2-3 engaging tourist or cultural stay. "
