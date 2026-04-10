@@ -1,3 +1,3 @@
-from .agent import execute
+from activities_agent.agent import execute
 async def run(payload):
     return await execute(payload)
