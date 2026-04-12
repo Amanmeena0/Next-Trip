@@ -5,11 +5,11 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-from Model.Model import get_Model
+from Model.Model import get_model
 
 stay_agent = Agent(
     name="stay_agent",
-    model=LiteLlm(get_Model),
+    model=LiteLlm(get_model),
     description="Suggests interesting stay for the user at a destination.",
     instruction=(
         "Given a destination, dates, and budget, suggest 2-3 engaging tourist or cultural stay. "
@@ -39,17 +39,22 @@ async def execute(request):
         f"Respond in JSON format using the key 'stay' with a list of stay objects."
     )
     message = types.Content(role="user", parts=[types.Part(text=prompt)])
-    async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message):
-        if event.is_final_response():
-            response_text = event.content.parts[0].text
-            try:
-                parsed = json.loads(response_text)
-                if "stay" in parsed and isinstance(parsed["stay"], list):
-                    return {"stay": parsed["stay"]}
-                else:
-                    print("'stay' key missing or not a list in response JSON")
+    try:
+        async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message):
+            if event.is_final_response():
+                response_text = event.content.parts[0].text
+                try:
+                    parsed = json.loads(response_text)
+                    if "stay" in parsed and isinstance(parsed["stay"], list):
+                        return {"stay": parsed["stay"]}
+                    else:
+                        print("'stay' key missing or not a list in response JSON")
+                        return {"stay": response_text}  # fallback to raw text
+                except json.JSONDecodeError as e:
+                    print("JSON parsing failed:", e)
+                    print("Response content:", response_text)
                     return {"stay": response_text}  # fallback to raw text
-            except json.JSONDecodeError as e:
-                print("JSON parsing failed:", e)
-                print("Response content:", response_text)
-                return {"stay": response_text}  # fallback to raw text
+    except Exception as e:
+        print("Stay agent execution failed:", e)
+        short_error = str(e).splitlines()[0]
+        return {"stay": f"Stay generation failed: {short_error}"}

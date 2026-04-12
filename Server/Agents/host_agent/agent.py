@@ -3,7 +3,7 @@ from google.adk.models.lite_llm import LiteLlm
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
-from Model.Model import get_Model
+from Model.Model import get_model
 
 host_agent = Agent(
     name="host_agent",

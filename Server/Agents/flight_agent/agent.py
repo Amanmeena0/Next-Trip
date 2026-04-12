@@ -5,11 +5,11 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-from Model.Model import get_Model
+from Model.Model import get_model
 
 flight_agent = Agent(
     name="flight_agent",
-    model=LiteLlm(get_Model),
+    model=LiteLlm(get_model),
     description="Suggest the best flights for the trip to the within the budget.",
     instruction=(
         "Given the budget suggest some flights between the given cities and with flight Name, Price, Departure Time," \
@@ -38,17 +38,22 @@ async def execute(request):
         f"Respond in JSON format using the key 'flights' with a list of activity objects."
     )
     message = types.Content(role="user", parts=[types.Part(text=prompt)])
-    async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message):
-        if event.is_final_response():
-            response_text = event.content.parts[0].text
-            try:
-                parsed = json.loads(response_text)
-                if "flights" in parsed and isinstance(parsed["flights"], list):
-                    return {"flights": parsed["flights"]}
-                else:
-                    print("'flights' key missing or not a list in response JSON")
+    try:
+        async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message):
+            if event.is_final_response():
+                response_text = event.content.parts[0].text
+                try:
+                    parsed = json.loads(response_text)
+                    if "flights" in parsed and isinstance(parsed["flights"], list):
+                        return {"flights": parsed["flights"]}
+                    else:
+                        print("'flights' key missing or not a list in response JSON")
+                        return {"flights": response_text}  # fallback to raw text
+                except json.JSONDecodeError as e:
+                    print("JSON parsing failed:", e)
+                    print("Response content:", response_text)
                     return {"flights": response_text}  # fallback to raw text
-            except json.JSONDecodeError as e:
-                print("JSON parsing failed:", e)
-                print("Response content:", response_text)
-                return {"flights": response_text}  # fallback to raw text
+    except Exception as e:
+        print("Flight agent execution failed:", e)
+        short_error = str(e).splitlines()[0]
+        return {"flights": f"Flight generation failed: {short_error}"}

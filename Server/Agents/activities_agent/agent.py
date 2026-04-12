@@ -39,17 +39,22 @@ async def execute(request):
         f"Respond in JSON format using the key 'activities' with a list of activity objects."
     )
     message = types.Content(role="user", parts=[types.Part(text=prompt)])
-    async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message):
-        if event.is_final_response():
-            response_text = event.content.parts[0].text
-            try:
-                parsed = json.loads(response_text)
-                if "activities" in parsed and isinstance(parsed["activities"], list):
-                    return {"activities": parsed["activities"]}
-                else:
-                    print("'activities' key missing or not a list in response JSON")
+    try:
+        async for event in runner.run_async(user_id=USER_ID, session_id=session_id, new_message=message):
+            if event.is_final_response():
+                response_text = event.content.parts[0].text
+                try:
+                    parsed = json.loads(response_text)
+                    if "activities" in parsed and isinstance(parsed["activities"], list):
+                        return {"activities": parsed["activities"]}
+                    else:
+                        print("'activities' key missing or not a list in response JSON")
+                        return {"activities": response_text}  # fallback to raw text
+                except json.JSONDecodeError as e:
+                    print("JSON parsing failed:", e)
+                    print("Response content:", response_text)
                     return {"activities": response_text}  # fallback to raw text
-            except json.JSONDecodeError as e:
-                print("JSON parsing failed:", e)
-                print("Response content:", response_text)
-                return {"activities": response_text}  # fallback to raw text
+    except Exception as e:
+        print("Activities agent execution failed:", e)
+        short_error = str(e).splitlines()[0]
+        return {"activities": f"Activities generation failed: {short_error}"}

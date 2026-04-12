@@ -2,6 +2,14 @@ import streamlit as st
 import requests
 
 
+def render_section(title: str, value):
+    st.subheader(title)
+    if isinstance(value, (list, dict)):
+        st.json(value)
+    else:
+        st.markdown(str(value))
+
+
 st.set_page_config(page_title="ADK-Powered Travel Planner", page_icon="✈️")
 st.title("🌍 ADK-Powered Travel Planner")
 origin = st.text_input("Where are you flying from?", placeholder="e.g., New York")
@@ -24,13 +32,12 @@ if st.button("Plan My Trip ✨"):
             response = requests.post("http://localhost:8000/run", json=payload, timeout=60)
             if response.ok:
                 data = response.json()
-                st.subheader("✈️ Flights")
-                st.markdown(data["flights"])
-                st.subheader("🏨 Stays")
-                st.markdown(data["stay"])
-                st.subheader("🗺️ Activities")
-                st.markdown(data["activities"])
+                render_section("✈️ Flights", data.get("flights", "No flights returned."))
+                render_section("🏨 Stays", data.get("stay", "No stay options returned."))
+                render_section("🗺️ Activities", data.get("activities", "No activities found."))
             else:
-                st.error("Failed to fetch travel plan. Please try again.")
+                st.error(f"Failed to fetch travel plan ({response.status_code}).")
+                if response.text:
+                    st.code(response.text)
         except requests.RequestException:
             st.error("Could not connect to host agent at http://localhost:8000/run. Start the host service and try again.")
