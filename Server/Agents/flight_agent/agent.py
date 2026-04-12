@@ -5,11 +5,11 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-
+from Model.Model import get_Model
 
 flight_agent = Agent(
     name="flight_agent",
-    model=LiteLlm("gemini-3-flash-preview"),
+    model=LiteLlm(get_Model),
     description="Suggest the best flights for the trip to the within the budget.",
     instruction=(
         "Given the budget suggest some flights between the given cities and with flight Name, Price, Departure Time," \

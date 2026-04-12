@@ -5,11 +5,11 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-
+from Model.Model import get_Model
 
 stay_agent = Agent(
     name="stay_agent",
-    model=LiteLlm("gemini-3-flash-preview"),
+    model=LiteLlm(get_Model),
     description="Suggests interesting stay for the user at a destination.",
     instruction=(
         "Given a destination, dates, and budget, suggest 2-3 engaging tourist or cultural stay. "
