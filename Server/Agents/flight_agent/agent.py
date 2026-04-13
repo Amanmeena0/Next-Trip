@@ -5,7 +5,7 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-from Model.Model import get_model,get_api_key
+from Model.Model import get_model,get_api_key,get_open_model
 
 model = LiteLlm(
     model=get_model(),
@@ -15,7 +15,7 @@ model = LiteLlm(
 
 flight_agent = Agent(
     name="flight_agent",
-    model=model,
+    model="openai/gpt-4o",
     description="Suggest the best flights for the trip to the within the budget.",
     instruction=(
         "Given the budget suggest some flights between the given cities and with flight Name, Price, Departure Time," \

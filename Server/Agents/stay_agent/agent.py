@@ -5,7 +5,7 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-from Model.Model import get_model,get_api_key
+from Model.Model import get_model,get_api_key,get_open_model
 
 model = LiteLlm(
     model=get_model(),
@@ -14,7 +14,7 @@ model = LiteLlm(
 
 stay_agent = Agent(
     name="stay_agent",
-    model=model,
+    model="openai/gpt-4o",
     description="Suggests interesting stay for the user at a destination.",
     instruction=(
         "Given a destination, dates, and budget, suggest 2-3 engaging tourist or cultural stay. "
