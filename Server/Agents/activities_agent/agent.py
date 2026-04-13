@@ -5,11 +5,16 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-from Model.Model import get_model
+from Model.Model import get_model,get_api_key
+
+model = LiteLlm(
+    model=get_model(),
+    api_key=get_api_key()
+)
 
 activities_agent = Agent(
     name="activities_agent",
-    model=LiteLlm(get_model),
+    model=model,
     description="Suggests interesting activities for the user at a destination.",
     instruction=(
         "Given a destination, dates, and budget, suggest 2-3 engaging tourist or cultural activities. "

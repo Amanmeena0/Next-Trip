@@ -3,11 +3,17 @@ from google.adk.models.lite_llm import LiteLlm
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
-from Model.Model import get_model
+from Model.Model import get_model,get_api_key
+
+model = LiteLlm(
+    model=get_model(),
+    api_key=get_api_key()
+)
+
 
 host_agent = Agent(
     name="host_agent",
-    model=LiteLlm(get_model),
+    model=model,
     description="Coordinates travel planning by calling flight, stay, and activity agents.",
     instruction="You are the host agent responsible for orchestrating trip planning tasks. "
                 "You call external agents to gather flights, stays, and activities, then return a final result."

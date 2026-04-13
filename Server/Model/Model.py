@@ -3,9 +3,14 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-# Keep a single source of truth for the LiteLLM model identifier.
-MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
+MODEL_NAME = os.getenv("MODEL_NAME", "gemini/gemini-1.5-flash")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-# Backward-compatible exports used across agent modules.
-get_model = MODEL_NAME
-get_Model = MODEL_NAME
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY is missing")
+
+def get_model():
+    return MODEL_NAME
+
+def get_api_key():
+    return GEMINI_API_KEY
