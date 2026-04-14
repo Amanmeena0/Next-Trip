@@ -10,7 +10,6 @@ model = LiteLlm(
     api_key=get_api_key()
 )
 
-
 host_agent = Agent(
     name="host_agent",
     model="openai/gpt-4o",
