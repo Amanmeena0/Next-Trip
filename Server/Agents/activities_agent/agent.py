@@ -5,12 +5,9 @@ from google.adk.sessions import InMemorySessionService
 from google.genai import types
 import json
 import uuid
-from Model.Model import get_model,get_api_key,get_open_model
+from Model.Model import get_model,get_api_key
 
-model = LiteLlm(
-    model=get_model(),
-    api_key=get_api_key()
-)
+
 
 activities_agent = Agent(
     name="activities_agent",
