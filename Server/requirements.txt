@@ -4,5 +4,5 @@ uvicorn
 httpx
 pydantic
 streamlit
-a2a-py
+a2a-sdk[all]
 dotenv
