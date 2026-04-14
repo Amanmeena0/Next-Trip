@@ -15,7 +15,7 @@ model = LiteLlm(
 
 flight_agent = Agent(
     name="flight_agent",
-    model="openai/gpt-4o",
+    model=model,
     description="Suggest the best flights for the trip to the within the budget.",
     instruction=(
         "Given the budget suggest some flights between the given cities and with flight Name, Price, Departure Time," \

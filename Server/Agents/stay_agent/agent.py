@@ -14,7 +14,7 @@ model = LiteLlm(
 
 stay_agent = Agent(
     name="stay_agent",
-    model="openai/gpt-4o",
+    model=model,
     description="Suggests interesting stay for the user at a destination.",
     instruction=(
         "Given a destination, dates, and budget, suggest 2-3 engaging tourist or cultural stay. "
