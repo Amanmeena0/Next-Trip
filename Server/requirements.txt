@@ -6,3 +6,4 @@ pydantic
 streamlit
 a2a-sdk[all]
 dotenv
+google-adk[extensions]

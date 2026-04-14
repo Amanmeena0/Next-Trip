@@ -12,7 +12,7 @@ model = LiteLlm(
 
 host_agent = Agent(
     name="host_agent",
-    model="openai/gpt-4o",
+    model=model,
     description="Coordinates travel planning by calling flight, stay, and activity agents.",
     instruction="You are the host agent responsible for orchestrating trip planning tasks. "
                 "You call external agents to gather flights, stays, and activities, then return a final result."

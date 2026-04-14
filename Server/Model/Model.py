@@ -3,7 +3,7 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash-preview-tts")
+MODEL_NAME = os.getenv("MODEL_NAME", "gemini/gemini-2.5-flash-preview-tts")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 OPENAI_API_KEY=os.getenv("OPENAI_API_KEY")
 
