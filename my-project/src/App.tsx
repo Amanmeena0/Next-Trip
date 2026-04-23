@@ -1,14 +1,10 @@
 
+import { ChatWindow } from './components/ChatWindow';
+
 function App() {
-
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </>
-  )
+    <ChatWindow />
+  );
 }
 
-export default App
+export default App;
