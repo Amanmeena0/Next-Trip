@@ -30,18 +30,18 @@ export function TripForm({
   onPlanTrip,
 }: TripFormProps) {
   return (
-    <div className="glass-panel p-6 rounded-xl shadow-[0_-4px_20px_rgba(15,82,186,0.08)] border border-white/50">
-      <div className="mb-6">
-        <h2 className="text-h2 font-h2 text-primary mb-2">
+    <div className="glass-panel p-4 sm:p-6 rounded-xl shadow-[0_-4px_20px_rgba(15,82,186,0.08)] border border-white/50">
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-h2 font-h2 text-primary mb-2">
           Create New Itinerary
         </h2>
-        <p className="text-body-sm text-on-surface-variant">
+        <p className="text-xs sm:text-body-sm text-on-surface-variant">
           Tell us where you want to go and we'll handle the rest.
         </p>
       </div>
 
-      <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <FormInput
             label="Origin"
             icon="location_on"
@@ -58,7 +58,7 @@ export function TripForm({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <FormInput
             label="Start Date"
             type="date"
@@ -73,12 +73,12 @@ export function TripForm({
           />
         </div>
 
-        <div className="space-y-4 pt-4 border-t border-outline-variant/30">
-          <div className="flex justify-between items-center">
-            <label className="text-label-caps font-label-caps text-outline">
+        <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-6 border-t border-outline-variant/30">
+          <div className="flex justify-between items-center gap-2">
+            <label className="text-xs sm:text-label-caps font-label-caps text-outline">
               Budget Range
             </label>
-            <span className="px-3 py-1 bg-secondary-fixed text-on-secondary-container rounded-full text-xs font-bold">
+            <span className="px-2 sm:px-3 py-1 bg-secondary-fixed text-on-secondary-container rounded-full text-xs font-bold whitespace-nowrap">
               ${budget.toLocaleString()}
             </span>
           </div>
@@ -91,7 +91,7 @@ export function TripForm({
             onChange={(e) => onBudgetChange(Number(e.target.value))}
             className="w-full h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary"
           />
-          <div className="flex justify-between text-xs text-outline font-label-caps">
+          <div className="flex justify-between text-xs text-outline font-label-caps gap-2">
             <span>$500 (Budget)</span>
             <span>$10k (Luxury)</span>
           </div>
@@ -100,7 +100,7 @@ export function TripForm({
         <button
           onClick={onPlanTrip}
           disabled={loading}
-          className="w-full py-4 bg-primary text-on-primary rounded-xl font-button text-button shadow-lg shadow-primary/20 active:scale-95 duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
+          className="w-full py-3 sm:py-4 bg-primary text-on-primary rounded-xl font-button text-xs sm:text-button shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-95 duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed transition-all"
         >
           {loading ? (
             <>

@@ -29,10 +29,10 @@ export default function TripFlow() {
     <div className="bg-surface text-on-surface font-body-md antialiased min-h-screen">
       <Header />
 
-      <main className="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <main className="pt-20 sm:pt-24 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8">
           {/* Left Panel */}
-          <section className="lg:col-span-5 flex flex-col gap-6">
+          <section className="lg:col-span-5 flex flex-col gap-4 sm:gap-6">
             <TripForm
               budget={budget}
               origin={origin}
@@ -52,7 +52,7 @@ export default function TripFlow() {
 
           {/* Right Panel */}
           <section className="lg:col-span-7">
-            <div className="h-full flex flex-col gap-6">
+            <div className="h-full flex flex-col gap-4 sm:gap-6">
               {!planned ? (
                 <EmptyState />
               ) : (
