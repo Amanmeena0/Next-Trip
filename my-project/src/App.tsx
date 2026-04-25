@@ -7,7 +7,6 @@ import { PopulatedState } from './components/PopulatedState';
 import { MobileNavigation } from './components/MobileNavigation';
 import { FloatingActionButton } from './components/FloatingActionButton';
 
-
 export default function TripFlow() {
   const [budget, setBudget] = useState<number>(2500);
   const [origin, setOrigin] = useState<string>('');
