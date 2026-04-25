@@ -6,6 +6,11 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
+  safelist: [
+    'bg-surface',
+    'text-on-surface',
+    'font-body-md',
+  ],
   theme: {
     extend: {
       colors: {
