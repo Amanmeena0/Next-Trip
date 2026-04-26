@@ -26,11 +26,11 @@ export default function TripFlow() {
   };
 
   return (
-    <div className="bg-surface text-on-surface font-body-md antialiased min-h-screen">
+    <div className="bg-gradient-to-b from-nature-blue-50 to-nature-green-50/30 text-nature-brown-900 font-body-md antialiased min-h-screen">
       <Header />
 
-      <main className="pt-20 sm:pt-24 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-8">
+      <main className="pt-16 sm:pt-20 md:pt-24 pb-32 sm:pb-40 px-4 sm:px-6 md:px-8 lg:px-10 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8 lg:gap-8">
           {/* Left Panel */}
           <section className="lg:col-span-5 flex flex-col gap-4 sm:gap-6">
             <TripForm

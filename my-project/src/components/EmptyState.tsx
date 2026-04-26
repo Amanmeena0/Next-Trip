@@ -1,15 +1,15 @@
 export function EmptyState() {
   return (
-    <div className="flex-1 glass-panel border-2 border-dashed border-outline-variant/50 rounded-2xl flex flex-col items-center justify-center p-12 text-center min-h-72">
-      <div className="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-6">
-        <span className="material-symbols-outlined text-4xl text-outline/50">
+    <div className="flex-1 glass-panel border-2 border-dashed border-nature-green-200 rounded-lg md:rounded-2xl flex flex-col items-center justify-center p-6 sm:p-8 md:p-12 text-center min-h-64 sm:min-h-72 md:min-h-96 bg-gradient-to-b from-nature-blue-50/30 to-nature-green-50/20">
+      <div className="w-16 sm:w-20 md:w-24 h-16 sm:h-20 md:h-24 rounded-full bg-gradient-to-br from-nature-blue-100 to-nature-green-100 flex items-center justify-center mb-4 sm:mb-6 shadow-md">
+        <span className="material-symbols-outlined text-3xl sm:text-4xl md:text-5xl text-nature-blue-700">
           map
         </span>
       </div>
-      <h3 className="text-h3 font-h3 text-on-surface mb-2">
+      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-nature-blue-900 mb-2 md:mb-3">
         Ready to explore?
       </h3>
-      <p className="max-w-xs mx-auto text-on-surface-variant text-body-md">
+      <p className="max-w-xs mx-auto text-nature-brown-600 text-xs sm:text-sm md:text-base leading-relaxed">
         Fill out the form to generate a customized AI trip summary, budget
         breakdown, and itinerary tips.
       </p>
