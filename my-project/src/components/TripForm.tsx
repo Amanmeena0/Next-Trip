@@ -30,7 +30,7 @@ export function TripForm({
   onPlanTrip,
 }: TripFormProps) {
   return (
-    <div className="glass-panel p-4 sm:p-6 md:p-8 rounded-lg md:rounded-2xl shadow-lg border-2 border-nature-green-100 bg-gradient-to-br from-white via-nature-blue-50/30 to-nature-green-50/30">
+    <div className="glass-panel p-4 sm:p-6 md:p-8 rounded-lg md:rounded-2xl shadow-lg border-2 border-nature-green-100 bg-linear-to-br from-white via-nature-blue-50/30 to-nature-green-50/30">
       <div className="mb-4 sm:mb-6 md:mb-8">
         <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-nature-blue-900 mb-1 md:mb-2">
           ✈️ Create New Itinerary
@@ -78,7 +78,7 @@ export function TripForm({
             <label className="text-xs sm:text-sm font-semibold text-nature-blue-700">
               💰 Budget Range
             </label>
-            <span className="px-3 sm:px-4 py-1.5 bg-gradient-to-r from-nature-green-100 to-nature-blue-100 text-nature-green-900 rounded-full text-xs md:text-sm font-bold whitespace-nowrap border border-nature-green-300">
+            <span className="px-3 sm:px-4 py-1.5 bg-linear-to-r from-nature-green-100 to-nature-blue-100 text-nature-green-900 rounded-full text-xs md:text-sm font-bold whitespace-nowrap border border-nature-green-300">
               ${budget.toLocaleString()}
             </span>
           </div>
@@ -100,7 +100,7 @@ export function TripForm({
         <button
           onClick={onPlanTrip}
           disabled={loading}
-          className="w-full py-3 sm:py-4 bg-gradient-to-r from-nature-blue-600 to-nature-green-600 text-white rounded-lg md:rounded-xl font-bold text-xs sm:text-sm md:text-base shadow-lg shadow-nature-blue-400/40 hover:shadow-xl hover:shadow-nature-blue-500/50 hover:from-nature-blue-700 hover:to-nature-green-700 active:scale-95 duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+          className="w-full py-3 sm:py-4 bg-linear-to-r from-nature-blue-600 to-nature-green-600 text-white rounded-lg md:rounded-xl font-bold text-xs sm:text-sm md:text-base shadow-lg shadow-nature-blue-400/40 hover:shadow-xl hover:shadow-nature-blue-500/50 hover:from-nature-blue-700 hover:to-nature-green-700 active:scale-95 duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
         >
           {loading ? (
             <>

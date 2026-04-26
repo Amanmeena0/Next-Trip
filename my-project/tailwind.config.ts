@@ -44,8 +44,18 @@ export default {
     'bg-nature-brown-900',
     // Nature colors - amber
     'text-nature-amber-700',
+    // New canonical gradient syntax
+    'bg-linear-to-t',
+    'bg-linear-to-b',
+    'bg-linear-to-r',
+    'bg-linear-to-l',
+    'bg-linear-to-br',
+    'bg-linear-to-bl',
+    'bg-linear-to-tr',
+    'bg-linear-to-tl',
     // Gradients
     'from-nature-blue-50',
+    'from-nature-blue-100',
     'from-nature-blue-600',
     'from-nature-blue-700',
     'from-nature-green-50',
@@ -55,6 +65,7 @@ export default {
     'from-nature-green-700',
     'from-nature-brown-900',
     'from-nature-amber-100',
+    'from-white',
     'to-nature-blue-50',
     'to-nature-blue-100',
     'to-nature-blue-600',
@@ -63,9 +74,11 @@ export default {
     'to-nature-green-600',
     'to-nature-green-700',
     'to-nature-brown-800',
+    'to-transparent',
     'via-nature-blue-50',
     'via-nature-brown-700',
     'via-nature-brown-800',
+    'via-nature-brown-800/70',
   ],
   theme: {
     extend: {

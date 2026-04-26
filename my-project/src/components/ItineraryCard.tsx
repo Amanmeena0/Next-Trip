@@ -14,7 +14,7 @@ export function ItineraryCard({
   budget,
 }: ItineraryCardProps) {
   return (
-    <div className="bg-gradient-to-br from-white to-nature-blue-50 rounded-lg md:rounded-2xl shadow-lg md:shadow-xl border-2 border-nature-green-200 overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+    <div className="bg-linear-to-br from-white to-nature-blue-50 rounded-lg md:rounded-2xl shadow-lg md:shadow-xl border-2 border-nature-green-200 overflow-hidden hover:shadow-2xl transition-shadow duration-300">
       <div className="p-4 sm:p-6 md:p-8 border-l-4 md:border-l-6 border-nature-blue-600 bg-gradient-to-r from-nature-blue-50/50 to-transparent">
         <div className="flex justify-between items-start gap-2 md:gap-4 mb-4 md:mb-6">
           <div className="flex-1 min-w-0">

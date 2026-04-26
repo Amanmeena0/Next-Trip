@@ -6,7 +6,7 @@ export function PromoCard() {
         alt="Scenic alpine lake"
         className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-nature-brown-900 via-nature-brown-800/70 to-transparent p-3 sm:p-4 md:p-6 flex flex-col justify-end">
+      <div className="absolute inset-0 bg-linear-to-t from-nature-brown-900 via-nature-brown-800/70 to-transparent p-3 sm:p-4 md:p-6 flex flex-col justify-end">
         <span className="text-nature-green-300 text-xs md:text-sm font-label-caps mb-1 md:mb-2">
           🌿 Travel Insight
         </span>
