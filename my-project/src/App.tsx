@@ -26,7 +26,7 @@ export default function TripFlow() {
   };
 
   return (
-    <div className="bg-linear-to-b from-nature-blue-50 to-nature-green-50/30 text-nature-brown-900 font-body-md antialiased min-h-screen">
+    <div className="bg-linear-to-t from-nature-blue-50 to-nature-green-50/30 text-nature-brown-900 font-body-md antialiased min-h-screen">
       <Header />
 
       <main className="pt-16 sm:pt-20 md:pt-24 pb-32 sm:pb-40 px-4 sm:px-6 md:px-8 lg:px-10 max-w-7xl mx-auto">
