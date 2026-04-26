@@ -7,19 +7,14 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export function FormInput({ label, icon, ...props }: InputProps) {
   return (
-    <div className="space-y-1.5 sm:space-y-2">
-      <label className="text-xs sm:text-sm font-semibold text-nature-blue-700 block">
+    <div className="space-y-2 sm:space-y-2.5">
+      <label className="text-sm sm:text-base font-semibold text-nature-blue-900 block">
         {label}
       </label>
       <div className="relative">
-        {icon && (
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-nature-blue-600 text-sm pointer-events-none">
-            {icon}
-          </span>
-        )}
         <input
           {...props}
-          className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-white border-2 border-nature-green-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-nature-blue-400 focus:border-nature-blue-600 focus:outline-none transition-all text-sm sm:text-base placeholder:text-nature-brown-400 hover:border-nature-green-300 ${
+          className={`w-full px-4 sm:px-5 py-3 sm:py-3.5 bg-white border border-nature-green-300 rounded-lg md:rounded-lg focus:ring-2 focus:ring-nature-green-400 focus:border-nature-green-600 focus:outline-none transition-all text-sm sm:text-base placeholder:text-nature-brown-500 hover:border-nature-green-400 ${
             icon ? 'pl-9 sm:pl-10' : ''
           }`}
         />

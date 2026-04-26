@@ -2,18 +2,18 @@ import { MOBILE_NAV_ITEMS } from '../constants/appConstants';
 
 export function MobileNavigation() {
   return (
-    <nav className="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-3 sm:py-4 bg-linear-to-t from-nature-blue-50 to-white/90 backdrop-blur-xl border-t-2 border-nature-green-200 shadow-lg rounded-t-2xl md:rounded-t-3xl">
+    <nav className="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-3 sm:px-4 py-3 sm:py-4 bg-white border-t border-nature-green-300 shadow-lg">
       {MOBILE_NAV_ITEMS.map(({ label, icon, active }) => (
         <button
           key={label}
-          className={`flex flex-col items-center justify-center transition-all gap-1 px-3 sm:px-4 py-2 rounded-xl ${
+          className={`flex flex-col items-center justify-center transition-all gap-1.5 px-3 sm:px-4 py-2 rounded-lg ${
             active
-              ? 'text-nature-blue-900 bg-nature-green-100 border-2 border-nature-green-300 font-semibold'
-              : 'text-nature-brown-600 hover:text-nature-blue-700 hover:bg-nature-blue-50 border-2 border-transparent'
+              ? 'text-nature-green-700 bg-nature-green-100 font-semibold'
+              : 'text-nature-brown-600 hover:text-nature-blue-700 hover:bg-nature-blue-50'
           }`}
         >
-          <span className="material-symbols-outlined text-lg sm:text-xl">{icon}</span>
-          <span className="text-xs font-semibold">{label}</span>
+          <span className="text-lg sm:text-xl">{icon === 'explore' ? '🔍' : icon === 'edit_calendar' ? '📅' : icon === 'map' ? '🗺️' : '👤'}</span>
+          <span className="text-xs sm:text-sm font-semibold">{label}</span>
         </button>
       ))}
     </nav>

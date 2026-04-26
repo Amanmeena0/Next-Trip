@@ -26,27 +26,45 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #ffffff;
   }
 
-  /* Responsive heading sizes */
+  /* Responsive heading sizes - improved for zoom */
   h1 {
-    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight;
   }
 
   h2 {
-    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold;
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight;
   }
 
   h3 {
-    @apply text-lg sm:text-xl md:text-2xl font-bold;
+    @apply text-lg sm:text-xl md:text-2xl font-bold leading-tight;
   }
 
   h4 {
-    @apply text-base sm:text-lg md:text-xl font-semibold;
+    @apply text-base sm:text-lg md:text-xl font-semibold leading-snug;
   }
 
   p {
-    @apply text-xs sm:text-sm md:text-base leading-relaxed;
+    @apply text-sm sm:text-base md:text-lg leading-relaxed;
+  }
+
+  /* Better link visibility */
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  /* Better form styling */
+  input,
+  textarea,
+  select {
+    @apply transition-all duration-200;
+  }
+
+  /* Remove default button styling */
+  button {
+    @apply font-inherit;
   }
 }
 

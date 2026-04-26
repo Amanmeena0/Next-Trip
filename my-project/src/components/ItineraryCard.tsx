@@ -14,32 +14,35 @@ export function ItineraryCard({
   budget,
 }: ItineraryCardProps) {
   return (
-    <div className="bg-linear-to-br from-white to-nature-blue-50 rounded-lg md:rounded-2xl shadow-lg md:shadow-xl border-2 border-nature-green-200 overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-      <div className="p-4 sm:p-6 md:p-8 border-l-4 md:border-l-6 border-nature-blue-600 bg-linear-to-r from-nature-blue-50/50 to-transparent">
-        <div className="flex justify-between items-start gap-2 md:gap-4 mb-4 md:mb-6">
+    <div className="bg-white rounded-lg md:rounded-xl shadow-lg border border-nature-green-300 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+      {/* Header */}
+      <div className="p-5 sm:p-6 md:p-7 bg-nature-blue-50 border-b border-nature-green-200">
+        <div className="flex justify-between items-start gap-3 md:gap-4 mb-4 md:mb-5">
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg sm:text-2xl md:text-3xl font-bold text-nature-blue-900 wrap-break-words">
-              {destination ? `🗺️ 7 Days in ${destination}` : '🗺️ 7 Days in Kyoto'}
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-nature-blue-900 wrap-words mb-1 sm:mb-2">
+              {destination ? `7 Days in ${destination}` : '7 Days in Kyoto'}
             </h3>
-            <p className="text-nature-brown-600 text-xs sm:text-sm md:text-base mt-1 md:mt-2">
+            <p className="text-sm sm:text-base md:text-lg text-nature-brown-600">
               {startDate && endDate
-                ? `📅 ${startDate} – ${endDate}`
-                : '📅 Oct 12 – Oct 19'}{' '}
-              • 💰 ${budget.toLocaleString()} Budget
+                ? `${startDate} – ${endDate}`
+                : 'Oct 12 – Oct 19'}{' '}
+              • ${budget.toLocaleString()} Budget
             </p>
           </div>
-          <span className="px-3 sm:px-4 py-2 bg-nature-green-100 text-nature-green-900 rounded-full text-xs md:text-sm font-bold whitespace-nowrap shrink-0 border border-nature-green-300">
+          <span className="px-3 sm:px-4 py-1.5 sm:py-2 bg-nature-green-100 text-nature-green-800 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 border border-nature-green-300">
             ✓ Planned
           </span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 md:gap-4 mt-4 sm:mt-6 md:mt-8">
-          {BUDGET_CATEGORIES.map(({ icon, label, value, color }) => (
-            <div key={label} className="p-2 sm:p-3 md:p-4 bg-white rounded-lg md:rounded-xl border-2 border-nature-green-100 hover:border-nature-green-300 transition-colors">
-              <span className={`material-symbols-outlined ${color} mb-1 sm:mb-2 block text-lg sm:text-2xl md:text-3xl`}>
-                {icon}
-              </span>
-              <p className="text-xs text-nature-brown-600 font-semibold">{label}</p>
-              <p className="font-bold text-nature-blue-900 text-sm md:text-base">{value}</p>
+      </div>
+
+      {/* Budget Breakdown */}
+      <div className="p-5 sm:p-6 md:p-7">
+        <h4 className="text-sm sm:text-base md:text-lg font-semibold text-nature-blue-800 mb-4 md:mb-5">Budget Breakdown</h4>
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-5">
+          {BUDGET_CATEGORIES.map(({ label, value}) => (
+            <div key={label} className="p-3 sm:p-4 md:p-5 bg-nature-blue-50 rounded-lg border border-nature-green-200 text-center hover:border-nature-green-300 transition-colors">
+              <p className="text-sm sm:text-base font-semibold text-nature-blue-800 mb-2">{label}</p>
+              <p className="font-bold text-nature-green-700 text-base sm:text-lg md:text-xl">{value}</p>
             </div>
           ))}
         </div>
