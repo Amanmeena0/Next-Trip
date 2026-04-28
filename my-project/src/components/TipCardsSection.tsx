@@ -1,4 +1,26 @@
 import { TIP_CARDS } from '../constants/appConstants';
 
 export function TipCardsSection() {
-  return (\n    <div className=\"grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6\">\n      {TIP_CARDS.map(({ icon, title, text, bg, titleColor, textColor }) => (\n        <div key={title} className=\"p-4 sm:p-5 md:p-6 bg-white border border-nature-green-200 rounded-lg md:rounded-xl hover:shadow-lg hover:border-nature-green-300 transition-all duration-300 cursor-pointer\">\n          <div className=\"flex items-start gap-3 md:gap-4 mb-2 md:mb-3\">\n            <span className=\"text-xl sm:text-2xl shrink-0\">{title.split(' ')[0]}</span>\n            <h4 className=\"font-bold text-sm md:text-base text-nature-blue-800 flex-1\">{title.replace(/^[^\\s]+\\s/, '')}</h4>\n          </div>\n          <p className=\"text-xs md:text-sm text-nature-brown-700 leading-relaxed\">{text}</p>\n        </div>\n      ))}\n    </div>\n  );\n}
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
+      {TIP_CARDS.map(({ icon, title, text, bg, titleColor, textColor }) => (
+        <div
+          key={title}
+          className={`p-4 sm:p-5 md:p-6 ${bg} rounded-lg md:rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer`}
+        >
+          <div className="flex items-start gap-3 md:gap-4 mb-2 md:mb-3">
+            <span className={`material-symbols-outlined ${titleColor} shrink-0 text-xl md:text-2xl`}>
+              {icon}
+            </span>
+            <h4 className={`font-bold text-sm md:text-base ${titleColor} flex-1`}>
+              {title}
+            </h4>
+          </div>
+          <p className={`text-xs md:text-sm ${textColor} leading-relaxed`}>
+            {text}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}

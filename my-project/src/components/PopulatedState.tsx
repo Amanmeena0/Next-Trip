@@ -1,5 +1,4 @@
 import { ItineraryCard } from './ItineraryCard';
-import { TipCardsSection } from './TipCardsSection';
 
 interface PopulatedStateProps {
   destination: string;
@@ -22,7 +21,6 @@ export function PopulatedState({
         endDate={endDate}
         budget={budget}
       />
-      <TipCardsSection />
     </div>
   );
 }
