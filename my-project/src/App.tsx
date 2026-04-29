@@ -31,7 +31,7 @@ export default function TripFlow() {
       {/*
         The main layout intentionally stays single-column on smaller screens and
         only becomes two columns on large laptops/desktops. This avoids the need
-        for users to zoom in just to read the form and itinerary at a normal
+        for users to zoom in just to read the form an itinerary at a normal
         15.6-inch laptop size.
       */}
       <main className="pt-20 sm:pt-22 md:pt-24 pb-32 sm:pb-40 px-4 sm:px-6 md:px-8 lg:px-10 max-w-7xl mx-auto">
