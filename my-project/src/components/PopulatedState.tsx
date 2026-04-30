@@ -1,10 +1,12 @@
 import { ItineraryCard } from './ItineraryCard';
+import type { TripPlanData } from '../types/trip';
 
 interface PopulatedStateProps {
   destination: string;
   startDate: string;
   endDate: string;
   budget: number;
+  tripPlan: TripPlanData;
 }
 
 export function PopulatedState({
@@ -12,6 +14,7 @@ export function PopulatedState({
   startDate,
   endDate,
   budget,
+  tripPlan,
 }: PopulatedStateProps) {
   return (
     <div className="flex flex-col gap-6 animate-fadeIn">
@@ -20,6 +23,7 @@ export function PopulatedState({
         startDate={startDate}
         endDate={endDate}
         budget={budget}
+        tripPlan={tripPlan}
       />
     </div>
   );

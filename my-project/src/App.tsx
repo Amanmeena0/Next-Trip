@@ -5,6 +5,7 @@ import { EmptyState } from './components/EmptyState';
 import { PopulatedState } from './components/PopulatedState';
 import { MobileNavigation } from './components/MobileNavigation';
 import { FloatingActionButton } from './components/FloatingActionButton';
+import type { TripPlanData, TripPlanRequest } from './types/trip';
 
 export default function TripFlow() {
   const [budget, setBudget] = useState<number>(2500);
@@ -12,16 +13,112 @@ export default function TripFlow() {
   const [destination, setDestination] = useState<string>('');
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
-  const [planned, setPlanned] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [tripPlan, setTripPlan] = useState<TripPlanData | null>(null);
+  const [error, setError] = useState<string>('');
+  const [validationError, setValidationError] = useState<string>('');
 
-  const handlePlanTrip = () => {
-    if (!origin || !destination) return;
+  const normalizeSection = (value: unknown): string[] => {
+    if (!Array.isArray(value)) return [];
+    return value
+      .map((item) => {
+        if (typeof item === 'string') return item;
+        if (item && typeof item === 'object') {
+          const textCandidate =
+            'title' in item
+              ? item.title
+              : 'name' in item
+                ? item.name
+                : 'description' in item
+                  ? item.description
+                  : 'details' in item
+                    ? item.details
+                    : null;
+          return typeof textCandidate === 'string' ? textCandidate : JSON.stringify(item);
+        }
+        return String(item);
+      })
+      .filter(Boolean);
+  };
+
+  const normalizeResponse = (payload: unknown): TripPlanData => {
+    if (!payload || typeof payload !== 'object') {
+      return { flights: [], stays: [], activities: [] };
+    }
+
+    const result = payload as Record<string, unknown>;
+    const nested = result.plan && typeof result.plan === 'object' ? (result.plan as Record<string, unknown>) : null;
+
+    return {
+      flights: normalizeSection(result.flights ?? nested?.flights),
+      stays: normalizeSection(result.stays ?? result.hotels ?? nested?.stays ?? nested?.hotels),
+      activities: normalizeSection(result.activities ?? nested?.activities),
+    };
+  };
+
+  const validateForm = (): string | null => {
+    if (!origin.trim() || !destination.trim() || !startDate || !endDate || budget <= 0) {
+      return 'Please fill all trip details before planning your itinerary.';
+    }
+
+    const from = new Date(startDate);
+    const to = new Date(endDate);
+
+    if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime())) {
+      return 'Please select valid travel dates.';
+    }
+
+    if (to < from) {
+      return 'To Date must be on or after From Date.';
+    }
+
+    return null;
+  };
+
+  const handlePlanTrip = async () => {
+    const validationMessage = validateForm();
+    if (validationMessage) {
+      setValidationError(validationMessage);
+      return;
+    }
+
+    setValidationError('');
+    setError('');
     setLoading(true);
-    setTimeout(() => {
+
+    const formData: TripPlanRequest = {
+      origin: origin.trim(),
+      destination: destination.trim(),
+      startDate,
+      endDate,
+      budget,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8000/plan-trip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Unable to generate itinerary at the moment. Please try again.');
+      }
+
+      const payload = (await response.json()) as unknown;
+      setTripPlan(normalizeResponse(payload));
+    } catch (requestError) {
+      setTripPlan(null);
+      setError(
+        requestError instanceof Error
+          ? requestError.message
+          : 'Something went wrong while planning your trip. Please try again.',
+      );
+    } finally {
       setLoading(false);
-      setPlanned(true);
-    }, 1200);
+    }
   };
 
   return (
@@ -45,6 +142,8 @@ export default function TripFlow() {
               startDate={startDate}
               endDate={endDate}
               loading={loading}
+              error={error}
+              validationError={validationError}
               onBudgetChange={setBudget}
               onOriginChange={setOrigin}
               onDestinationChange={setDestination}
@@ -57,7 +156,7 @@ export default function TripFlow() {
           {/* Right Panel */}
           <section className="lg:col-span-7">
             <div className="h-full flex flex-col gap-5 sm:gap-6">
-              {!planned ? (
+              {!tripPlan ? (
                 <EmptyState />
               ) : (
                 <PopulatedState
@@ -65,6 +164,7 @@ export default function TripFlow() {
                   startDate={startDate}
                   endDate={endDate}
                   budget={budget}
+                  tripPlan={tripPlan}
                 />
               )}
             </div>

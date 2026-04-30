@@ -1,38 +1,48 @@
-from common.a2a_client import call_agent
-FLIGHT_URL = "http://localhost:8001/run"
-STAY_URL = "http://localhost:8002/run"
-ACTIVITIES_URL = "http://localhost:8003/run"
+import asyncio
+import logging
+from typing import Dict, Any
 
-async def run(payload):
-    #Print what the host agent is sending
-    print("Incoming payload:", payload)
-    try:
-        flights = await call_agent(FLIGHT_URL, payload)
-    except Exception as e:
-        print("flight agent call failed:", e)
-        flights = {"flights": "Flight service is currently unavailable."}
+from Agents.flight_agent.agent import execute as flight_execute
+from Agents.stay_agent.agent import execute as stay_execute
+from Agents.activities_agent.agent import execute as activities_execute
 
-    try:
-        stay = await call_agent(STAY_URL, payload)
-    except Exception as e:
-        print("stay agent call failed:", e)
-        stay = {"stay": "Stay service is currently unavailable."}
+logger = logging.getLogger(__name__)
 
-    try:
-        activities = await call_agent(ACTIVITIES_URL, payload)
-    except Exception as e:
-        print("activities agent call failed:", e)
-        activities = {"activities": "Activities service is currently unavailable."}
-    # Log outputs
-    print("flights:", flights)
-    print("stay:", stay)
-    print("activities:", activities)
-    # Ensure all are dicts before access
-    flights = flights if isinstance(flights, dict) else {}
-    stay = stay if isinstance(stay, dict) else {}
-    activities = activities if isinstance(activities, dict) else {}
-    return {
-        "flights": flights.get("flights", "No flights returned."),
-        "stay": stay.get("stay", "No stay options returned."),
-        "activities": activities.get("activities", "No activities found.")
+
+async def run(payload: Dict[str, Any]) -> Dict[str, Any]:
+    """Orchestrator: call sub-agents internally (async) and aggregate results.
+
+    Expected payload keys: `destination`, `start_date`, `end_date`, `budget`.
+    """
+    logger.info("Host orchestrator received payload: %s", payload)
+
+    async def _safe_call(name, coro):
+        try:
+            res = await coro
+            return res if isinstance(res, dict) else {name: res}
+        except Exception as e:
+            logger.exception("Agent %s failed", name)
+            return {name: f"{name} failed: {str(e).splitlines()[0]}"}
+
+    # Run agents in parallel (they are independent)
+    tasks = [
+        _safe_call("flights", flight_execute(payload)),
+        _safe_call("stay", stay_execute(payload)),
+        _safe_call("activities", activities_execute(payload)),
+    ]
+
+    flights_res, stay_res, activities_res = await asyncio.gather(*tasks)
+
+    # Normalize outputs
+    flights = flights_res.get("flights") if isinstance(flights_res, dict) else flights_res
+    stay = stay_res.get("stay") if isinstance(stay_res, dict) else stay_res
+    activities = activities_res.get("activities") if isinstance(activities_res, dict) else activities_res
+
+    aggregated = {
+        "flights": flights or "No flights returned.",
+        "stay": stay or "No stay options returned.",
+        "activities": activities or "No activities found.",
     }
+
+    logger.info("Aggregated result: %s", aggregated)
+    return aggregated

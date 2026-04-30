@@ -12,7 +12,19 @@ if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY is missing")
 
 def get_model():
-    return LiteLlm(model="gemini-2.5-flash")
+    """Get the default LLM model (Gemini via API key)."""
+    return LiteLlm(model="gemini/gemini-2.5-flash", api_key=GEMINI_API_KEY)
+
+def get_api_key():
+    """Get the Gemini API key."""
+    return GEMINI_API_KEY
+
+def get_open_model():
+    """Get Hugging Face model."""
+    if not HUGGINGFACE_API_KEY:
+        raise ValueError("HUGGINGFACE_API_KEY is missing")
+    return LiteLlm(model="huggingface/meta-llama/Meta-Llama-3-8B-Instruct")
 
 def get_hugging_face():
-    return LiteLlm(model="huggingface/meta-llama/Meta-Llama-3-8B-Instruct")
+    """Alias for get_open_model()."""
+    return get_open_model()

@@ -7,12 +7,14 @@ interface TripFormProps {
   startDate: string;
   endDate: string;
   loading: boolean;
+  error: string;
+  validationError: string;
   onBudgetChange: (value: number) => void;
   onOriginChange: (value: string) => void;
   onDestinationChange: (value: string) => void;
   onStartDateChange: (value: string) => void;
   onEndDateChange: (value: string) => void;
-  onPlanTrip: () => void;
+  onPlanTrip: () => Promise<void>;
 }
 
 export function TripForm({
@@ -22,6 +24,8 @@ export function TripForm({
   startDate,
   endDate,
   loading,
+  error,
+  validationError,
   onBudgetChange,
   onOriginChange,
   onDestinationChange,
@@ -29,7 +33,8 @@ export function TripForm({
   onEndDateChange,
   onPlanTrip,
 }: TripFormProps) {
-  const isFormValid = origin && destination;
+  const isFormValid =
+    origin.trim() !== '' && destination.trim() !== '' && startDate !== '' && endDate !== '' && budget > 0;
 
   return (
     <div className="bg-[#fdf8f0] p-5 sm:p-7 md:p-8 rounded-xl md:rounded-2xl shadow-lg border border-[#e2ccae]">
@@ -71,12 +76,14 @@ export function TripForm({
               label="Start date"
               type="date"
               value={startDate}
+              min={new Date().toISOString().split('T')[0]}
               onChange={(e) => onStartDateChange(e.target.value)}
             />
             <FormInput
               label="End date"
               type="date"
               value={endDate}
+              min={startDate || new Date().toISOString().split('T')[0]}
               onChange={(e) => onEndDateChange(e.target.value)}
             />
           </div>
@@ -110,8 +117,16 @@ export function TripForm({
         </div>
 
         {/* CTA Button */}
+        {(validationError || error) && (
+          <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {validationError || error}
+          </div>
+        )}
+
         <button
-          onClick={onPlanTrip}
+          onClick={() => {
+            void onPlanTrip();
+          }}
           disabled={loading || !isFormValid}
           className={`w-full py-3.5 sm:py-4 md:py-5 rounded-lg md:rounded-xl font-bold text-sm sm:text-base md:text-lg transition-all duration-200 flex items-center justify-center gap-2.5 ${
             isFormValid && !loading

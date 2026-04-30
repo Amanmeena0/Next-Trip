@@ -1,14 +1,10 @@
 from google.adk.agents import Agent
-from google.adk.models.lite_llm import LiteLlm
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
 from google.genai import types
-from Model.Model import get_model,get_api_key,get_open_model
+from Model.Model import get_model
 
-model = LiteLlm(
-    model=get_model(),
-    api_key=get_api_key()
-)
+model = get_model()  # Already returns a ready LiteLlm instance
 
 host_agent = Agent(
     name="host_agent",

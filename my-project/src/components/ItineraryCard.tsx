@@ -1,10 +1,11 @@
-import { BUDGET_CATEGORIES } from '../constants/appConstants';
+import type { TripPlanData } from '../types/trip';
 
 interface ItineraryCardProps {
   destination: string;
   startDate: string;
   endDate: string;
   budget: number;
+  tripPlan: TripPlanData;
 }
 
 export function ItineraryCard({
@@ -12,7 +13,29 @@ export function ItineraryCard({
   startDate,
   endDate,
   budget,
+  tripPlan,
 }: ItineraryCardProps) {
+  const sections = [
+    {
+      title: 'Flights',
+      icon: '✈️',
+      items: tripPlan.flights,
+      empty: 'No flight options were returned for this route.',
+    },
+    {
+      title: 'Stays',
+      icon: '🏨',
+      items: tripPlan.stays,
+      empty: 'No stay suggestions were returned for these dates.',
+    },
+    {
+      title: 'Activities',
+      icon: '🎯',
+      items: tripPlan.activities,
+      empty: 'No activities were returned for this destination yet.',
+    },
+  ];
+
   return (
     <div className="bg-white rounded-lg md:rounded-xl shadow-lg border border-nature-green-300 overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Header */}
@@ -35,14 +58,32 @@ export function ItineraryCard({
         </div>
       </div>
 
-      {/* Budget Breakdown */}
+      {/* Aggregated Trip Plan */}
       <div className="p-5 sm:p-6 md:p-7">
-        <h4 className="text-sm sm:text-base md:text-lg font-semibold text-nature-blue-800 mb-4 md:mb-5">Budget Breakdown</h4>
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-5">
-          {BUDGET_CATEGORIES.map(({ label, value}) => (
-            <div key={label} className="p-3 sm:p-4 md:p-5 bg-nature-blue-50 rounded-lg border border-nature-green-200 text-center hover:border-nature-green-300 transition-colors">
-              <p className="text-sm sm:text-base font-semibold text-nature-blue-800 mb-2">{label}</p>
-              <p className="font-bold text-nature-green-700 text-base sm:text-lg md:text-xl">{value}</p>
+        <h4 className="text-sm sm:text-base md:text-lg font-semibold text-nature-blue-800 mb-4 md:mb-5">Your Trip Options</h4>
+        <div className="space-y-4 sm:space-y-5 md:space-y-6">
+          {sections.map((section) => (
+            <div key={section.title} className="rounded-lg border border-nature-green-200 bg-nature-blue-50 p-4 sm:p-5">
+              <h5 className="mb-3 text-base sm:text-lg font-semibold text-nature-blue-900">
+                <span className="mr-2" aria-hidden>
+                  {section.icon}
+                </span>
+                {section.title}
+              </h5>
+              {section.items.length === 0 ? (
+                <p className="text-sm sm:text-base text-nature-brown-600">{section.empty}</p>
+              ) : (
+                <ul className="space-y-2.5 sm:space-y-3">
+                  {section.items.map((item, index) => (
+                    <li
+                      key={`${section.title}-${index}`}
+                      className="rounded-md bg-white px-3 py-2.5 text-sm sm:text-base text-nature-brown-800 border border-nature-green-100"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>
