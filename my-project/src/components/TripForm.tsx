@@ -130,13 +130,13 @@ export function TripForm({
           disabled={loading || !isFormValid}
           className={`w-full py-3.5 sm:py-4 md:py-5 rounded-lg md:rounded-xl font-bold text-sm sm:text-base md:text-lg transition-all duration-200 flex items-center justify-center gap-2.5 ${
             isFormValid && !loading
-              ? 'bg-nature-green-600 text-white shadow-lg shadow-nature-green-400/30 hover:bg-nature-green-700 active:scale-95'
+              ? 'bg-nature-green-600 text-blue-300 shadow-lg shadow-nature-green-400/30 hover:bg-nature-green-700 active:scale-95'
               : 'bg-nature-brown-200 text-nature-brown-600 cursor-not-allowed'
           }`}
         >
           {loading ? (
             <>
-              <span className="inline-block w-5 h-5 sm:w-6 sm:h-6 border-2 text-blue-600 border-white border-t-transparent rounded-full animate-spin" />
+              <span className="inline-block w-5 h-5 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Planning your trip...</span>
             </>
           ) : (

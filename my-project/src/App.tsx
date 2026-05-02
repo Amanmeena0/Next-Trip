@@ -90,13 +90,22 @@ export default function TripFlow() {
 
     const formData: TripPlanRequest = {
       leavingCity: origin.trim(),
-      destination: destination.trim(),
+      destinationCity: destination.trim(),  // ✅ Correct field name
       fromDate: startDate,
       toDate: endDate,
       budget,
     };
 
     console.log('📤 Sending trip data to backend:', formData);
+    console.log('🔄 Field validation:');
+    console.log('   - leavingCity:', formData.leavingCity);
+    console.log('   - destinationCity:', formData.destinationCity);
+    console.log('   - fromDate:', formData.fromDate, '(format: YYYY-MM-DD)');
+    console.log('   - toDate:', formData.toDate, '(format: YYYY-MM-DD)');
+    console.log('   - budget:', formData.budget, '(type:', typeof formData.budget, ')');
+    
+    // Use formData directly (no need for separate backendPayload)
+    const backendPayload = formData;
 
     const extractErrorMessage = async (response: Response): Promise<string> => {
       try {
@@ -125,7 +134,7 @@ export default function TripFlow() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+          body: JSON.stringify(backendPayload),
       });
 
       console.log('📊 Response status:', response.status, response.statusText);

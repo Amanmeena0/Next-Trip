@@ -1,6 +1,6 @@
 export interface TripPlanRequest {
   leavingCity: string;
-  destination: string;
+  destinationCity: string;  // ✅ Changed from 'destination' to 'destinationCity'
   fromDate: string;
   toDate: string;
   budget: number;
