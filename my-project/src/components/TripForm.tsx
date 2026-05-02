@@ -136,7 +136,7 @@ export function TripForm({
         >
           {loading ? (
             <>
-              <span className="inline-block w-5 h-5 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span className="inline-block w-5 h-5 sm:w-6 sm:h-6 border-2 text-blue-600 border-white border-t-transparent rounded-full animate-spin" />
               <span>Planning your trip...</span>
             </>
           ) : (

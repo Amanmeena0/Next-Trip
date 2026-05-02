@@ -119,6 +119,7 @@ export default function TripFlow() {
     };
 
     try {
+      console.log('🔄 Making fetch request to http://localhost:8000/api/trips/plan');
       const response = await fetch('http://localhost:8000/api/trips/plan', {
         method: 'POST',
         headers: {
@@ -127,17 +128,39 @@ export default function TripFlow() {
         body: JSON.stringify(formData),
       });
 
+      console.log('📊 Response status:', response.status, response.statusText);
+      console.log('📊 Response headers:', response.headers);
+
       if (!response.ok) {
         throw new Error(await extractErrorMessage(response));
       }
 
       const payload = (await response.json()) as TripPlanResponse;
       console.log('✅ Response received from backend:', payload);
-      const normalizedPlan = normalizeResponse(payload.results);
+      console.log('🔍 Checking payload structure:');
+      console.log('   - payload.results exists?', !!payload.results);
+      console.log('   - payload.results type:', typeof payload.results);
+      console.log('   - payload keys:', Object.keys(payload));
+      
+      // Handle different response structures
+      const resultsData = payload.results || payload;
+      const normalizedPlan = normalizeResponse(resultsData);
       console.log('📋 Normalized trip plan:', normalizedPlan);
       setTripPlan(normalizedPlan);
     } catch (requestError) {
       console.error('❌ Error occurred:', requestError);
+      
+      if (requestError instanceof TypeError) {
+        console.error('🔗 Network Error - Backend might not be running');
+        console.error('   Make sure backend is running on http://localhost:8000');
+        console.error('   Error details:', requestError.message);
+      } else if (requestError instanceof SyntaxError) {
+        console.error('📄 JSON Parse Error - Response is not valid JSON');
+        console.error('   Error details:', requestError.message);
+      } else if (requestError instanceof Error) {
+        console.error('📋 API Error:', requestError.message);
+      }
+      
       setTripPlan(null);
       setError(
         requestError instanceof Error

@@ -58,7 +58,7 @@ def _build_host_payload(trip: TripRequest) -> dict:
     }
 
 
-@app.post("api/trips/plan", response_model=TripPlanResponse)
+@app.post("/api/trips/plan", response_model=TripPlanResponse)
 async def plan_trip(trip: TripRequest):
     payload = _build_host_payload(trip)
 
