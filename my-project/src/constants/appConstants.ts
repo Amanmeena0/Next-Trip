@@ -28,9 +28,9 @@ export const MOBILE_NAV_ITEMS: NavItem[] = [
 ];
 
 export const BUDGET_CATEGORIES: BudgetCategory[] = [
-  { icon: 'flight', label: 'Flights', value: '$850', color: 'text-nature-blue-700' },
-  { icon: 'hotel', label: 'Stay', value: '$1,200', color: 'text-nature-green-700' },
-  { icon: 'restaurant', label: 'Daily', value: '$450', color: 'text-nature-amber-700' },
+  { icon: 'flight', label: 'Flights', value: '$850', color: 'text-primary' },
+  { icon: 'hotel', label: 'Stay', value: '$1,200', color: 'text-accent' },
+  { icon: 'restaurant', label: 'Daily', value: '$450', color: 'text-warning' },
 ];
 
 export const TIP_CARDS: TipCard[] = [
@@ -38,16 +38,16 @@ export const TIP_CARDS: TipCard[] = [
     icon: 'tips_and_updates',
     title: '💡 Insider Tip',
     text: 'Book your Shinkansen tickets 2 weeks in advance for better rates.',
-    bg: 'bg-nature-blue-50 border-2 border-nature-blue-200 hover:border-nature-blue-300',
-    titleColor: 'text-nature-blue-900',
-    textColor: 'text-nature-blue-700',
+    bg: 'bg-primary/5 border border-primary/15 hover:border-primary/25',
+    titleColor: 'text-primary',
+    textColor: 'text-foreground/75',
   },
   {
     icon: 'verified',
     title: '✅ Best Value',
     text: 'The JR Pass might not be worth it for this specific route. Use IC cards.',
-    bg: 'bg-nature-green-50 border-2 border-nature-green-200 hover:border-nature-green-300',
-    titleColor: 'text-nature-green-900',
-    textColor: 'text-nature-green-700',
+    bg: 'bg-accent/5 border border-accent/15 hover:border-accent/25',
+    titleColor: 'text-accent',
+    textColor: 'text-foreground/75',
   },
 ];

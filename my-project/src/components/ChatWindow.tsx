@@ -47,23 +47,23 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-surface rounded-xl border border-outline-variant shadow-sm">
-      <div className="p-4 border-b border-outline-variant/30 flex items-center justify-between bg-primary-fixed/30">
+    <div className="surface-card flex h-full flex-col">
+      <div className="flex items-center justify-between border-b border-border/70 bg-primary/5 p-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
             <span className="material-symbols-outlined text-lg">chat</span>
           </div>
           <div>
-            <h3 className="text-body-md font-h3 text-on-surface">Trip Assistant</h3>
-            <p className="text-xs text-on-surface-variant">Online • Ready to help</p>
+            <h3 className="text-base font-semibold text-foreground">Trip Assistant</h3>
+            <p className="text-xs text-muted-foreground">Online • Ready to help</p>
           </div>
         </div>
-        <button className="p-2 hover:bg-white/50 rounded-lg transition-colors">
-          <span className="material-symbols-outlined text-outline text-sm">info</span>
+        <button className="rounded-lg p-2 transition-colors hover:bg-surface-muted">
+          <span className="material-symbols-outlined text-sm text-muted-foreground">info</span>
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 space-y-4 overflow-y-auto p-4">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -72,14 +72,14 @@ export default function ChatWindow() {
             <div
               className={`max-w-xs px-4 py-3 rounded-xl ${
                 message.sender === 'user'
-                  ? 'bg-primary text-on-primary rounded-br-none'
-                  : 'bg-surface-container-low text-on-surface rounded-bl-none border border-outline-variant/50'
+                  ? 'rounded-br-none bg-primary text-primary-foreground'
+                  : 'rounded-bl-none border border-border bg-surface-elevated text-foreground'
               }`}
             >
-              <p className="text-body-sm leading-relaxed">{message.text}</p>
+              <p className="text-sm leading-relaxed">{message.text}</p>
               <p
                 className={`text-xs mt-1 ${
-                  message.sender === 'user' ? 'text-on-primary/70' : 'text-on-surface-variant'
+                  message.sender === 'user' ? 'text-primary-foreground/70' : 'text-muted-foreground'
                 }`}
               >
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -89,30 +89,30 @@ export default function ChatWindow() {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-surface-container-low text-on-surface rounded-xl rounded-bl-none px-4 py-3 border border-outline-variant/50">
+            <div className="rounded-xl rounded-bl-none border border-border bg-surface-elevated px-4 py-3 text-foreground">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm animate-spin">autorenew</span>
-                <p className="text-body-sm">AI is typing...</p>
+                <p className="text-sm">AI is typing...</p>
               </div>
             </div>
           </div>
         )}
       </div>
 
-      <form onSubmit={handleSendMessage} className="p-4 border-t border-outline-variant/30 bg-white/50 backdrop-blur-sm">
+      <form onSubmit={handleSendMessage} className="border-t border-border/70 bg-surface/70 p-4 backdrop-blur-sm">
         <div className="flex gap-3">
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Ask me anything about your trip..."
-            className="flex-1 px-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all text-body-md"
+            className="input-field flex-1"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={isLoading || !inputValue.trim()}
-            className="px-4 py-3 bg-primary text-on-primary rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-button text-button flex items-center justify-center gap-2"
+            className="btn-primary px-4 py-3 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-lg">send</span>
           </button>

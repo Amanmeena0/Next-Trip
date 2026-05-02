@@ -37,13 +37,13 @@ export function TripForm({
     origin.trim() !== '' && destination.trim() !== '' && startDate !== '' && endDate !== '' && budget > 0;
 
   return (
-    <div className="bg-[#fdf8f0] p-5 sm:p-7 md:p-8 rounded-xl md:rounded-2xl shadow-lg border border-[#e2ccae]">
+    <div className="surface-card p-6 sm:p-7 md:p-8">
       {/* Header Section */}
       <div className="mb-7 sm:mb-8 md:mb-9">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-nature-brown-900 mb-2 sm:mb-3">
+        <h2 className="section-title mb-2 sm:mb-3">
           Plan Your Trip
         </h2>
-        <p className="text-sm sm:text-base md:text-lg text-nature-brown-700 leading-relaxed">
+        <p className="text-sm sm:text-base md:text-lg text-foreground/75">
           Tell us your travel details and we'll create your perfect itinerary.
         </p>
       </div>
@@ -51,8 +51,8 @@ export function TripForm({
       <div className="space-y-6 sm:space-y-7 md:space-y-8">
         {/* Location Section */}
         <div>
-          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-nature-brown-800 mb-3 sm:mb-4">Where are you going?</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <h3 className="mb-3 sm:mb-4 text-sm font-semibold text-foreground sm:text-base md:text-lg">Where are you going?</h3>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
             <FormInput
               label="Leaving from"
               placeholder="e.g., New York"
@@ -70,8 +70,8 @@ export function TripForm({
 
         {/* Dates Section */}
         <div>
-          <h3 className="text-sm sm:text-base md:text-lg font-semibold text-nature-brown-800 mb-3 sm:mb-4">When are you traveling?</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <h3 className="mb-3 sm:mb-4 text-sm font-semibold text-foreground sm:text-base md:text-lg">When are you traveling?</h3>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
             <FormInput
               label="Start date"
               type="date"
@@ -90,13 +90,13 @@ export function TripForm({
         </div>
 
         {/* Budget Section */}
-        <div className="bg-[#f4eadb] border border-[#dbc3a4] p-5 sm:p-6 md:p-7 rounded-lg md:rounded-xl">
+        <div className="surface-panel p-5 sm:p-6 md:p-7">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-5">
-            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-nature-brown-800">
+            <h3 className="text-sm font-semibold text-foreground sm:text-base md:text-lg">
               What's your budget?
             </h3>
             <div className="flex items-center gap-2">
-              <span className="text-lg sm:text-2xl md:text-3xl font-bold text-nature-brown-900">
+              <span className="text-lg font-bold text-foreground sm:text-2xl md:text-3xl">
                 ${budget.toLocaleString()}
               </span>
             </div>
@@ -108,9 +108,9 @@ export function TripForm({
             step={100}
             value={budget}
             onChange={(e) => onBudgetChange(Number(e.target.value))}
-            className="w-full h-2.5 sm:h-3 bg-nature-blue-200 rounded-lg appearance-none cursor-pointer accent-nature-green-600 hover:accent-nature-green-700 transition-all"
+            className="h-2 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary transition-all"
           />
-          <div className="flex justify-between text-xs sm:text-sm text-nature-brown-600 font-medium gap-2 mt-3 sm:mt-4">
+          <div className="mt-3 flex justify-between gap-2 text-xs font-medium text-muted-foreground sm:mt-4 sm:text-sm">
             <span>$500</span>
             <span>$10,000</span>
           </div>
@@ -118,7 +118,7 @@ export function TripForm({
 
         {/* CTA Button */}
         {(validationError || error) && (
-          <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div className="rounded-xl border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
             {validationError || error}
           </div>
         )}
@@ -128,15 +128,15 @@ export function TripForm({
             void onPlanTrip();
           }}
           disabled={loading || !isFormValid}
-          className={`w-full py-3.5 sm:py-4 md:py-5 rounded-lg md:rounded-xl font-bold text-sm sm:text-base md:text-lg transition-all duration-200 flex items-center justify-center gap-2.5 ${
+          className={`btn-primary w-full py-3.5 sm:py-4 md:py-5 text-sm sm:text-base md:text-lg ${
             isFormValid && !loading
-              ? 'bg-nature-green-600 text-blue-300 shadow-lg shadow-nature-green-400/30 hover:bg-nature-green-700 active:scale-95'
-              : 'bg-nature-brown-200 text-nature-brown-600 cursor-not-allowed'
+              ? ''
+              : 'cursor-not-allowed bg-muted text-muted-foreground shadow-none hover:bg-muted'
           }`}
         >
           {loading ? (
             <>
-              <span className="inline-block w-5 h-5 sm:w-6 sm:h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <span className="inline-block h-5 w-5 rounded-full border-2 border-current border-t-transparent animate-spin sm:h-6 sm:w-6" />
               <span>Planning your trip...</span>
             </>
           ) : (
