@@ -5,7 +5,7 @@ import { EmptyState } from './components/EmptyState';
 import { PopulatedState } from './components/PopulatedState';
 import { MobileNavigation } from './components/MobileNavigation';
 import { FloatingActionButton } from './components/FloatingActionButton';
-import type { TripPlanData, TripPlanRequest } from './types/trip';
+import type { TripPlanData, TripPlanRequest, TripPlanResponse } from './types/trip';
 
 export default function TripFlow() {
   const [budget, setBudget] = useState<number>(2500);
@@ -68,8 +68,8 @@ export default function TripFlow() {
       return 'Please select valid travel dates.';
     }
 
-    if (to < from) {
-      return 'To Date must be on or after From Date.';
+    if (to <= from) {
+      return 'To Date must be after From Date.';
     }
 
     return null;
@@ -87,15 +87,35 @@ export default function TripFlow() {
     setLoading(true);
 
     const formData: TripPlanRequest = {
-      origin: origin.trim(),
+      leavingCity: origin.trim(),
       destination: destination.trim(),
-      startDate,
-      endDate,
+      fromDate: startDate,
+      toDate: endDate,
       budget,
     };
 
+    const extractErrorMessage = async (response: Response): Promise<string> => {
+      try {
+        const payload = (await response.json()) as unknown;
+        if (payload && typeof payload === 'object') {
+          const detail = (payload as { detail?: unknown }).detail;
+          if (typeof detail === 'string') return detail;
+          if (Array.isArray(detail) && detail.length > 0) {
+            const firstDetail = detail[0] as { msg?: unknown } | undefined;
+            if (firstDetail && typeof firstDetail.msg === 'string') {
+              return firstDetail.msg;
+            }
+          }
+        }
+      } catch {
+        // Fall back to the generic message below.
+      }
+
+      return 'Unable to generate itinerary at the moment. Please try again.';
+    };
+
     try {
-      const response = await fetch('http://localhost:8000/plan-trip', {
+      const response = await fetch('http://localhost:8000/api/trips/plan', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,11 +124,11 @@ export default function TripFlow() {
       });
 
       if (!response.ok) {
-        throw new Error('Unable to generate itinerary at the moment. Please try again.');
+        throw new Error(await extractErrorMessage(response));
       }
 
-      const payload = (await response.json()) as unknown;
-      setTripPlan(normalizeResponse(payload));
+      const payload = (await response.json()) as TripPlanResponse;
+      setTripPlan(normalizeResponse(payload.results));
     } catch (requestError) {
       setTripPlan(null);
       setError(
