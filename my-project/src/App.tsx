@@ -78,10 +78,12 @@ export default function TripFlow() {
   const handlePlanTrip = async () => {
     const validationMessage = validateForm();
     if (validationMessage) {
+      console.warn('⚠️ Validation failed:', validationMessage);
       setValidationError(validationMessage);
       return;
     }
 
+    console.log('✔️ Form validation passed, proceeding to API call...');
     setValidationError('');
     setError('');
     setLoading(true);
@@ -93,6 +95,8 @@ export default function TripFlow() {
       toDate: endDate,
       budget,
     };
+
+    console.log('📤 Sending trip data to backend:', formData);
 
     const extractErrorMessage = async (response: Response): Promise<string> => {
       try {
@@ -128,8 +132,12 @@ export default function TripFlow() {
       }
 
       const payload = (await response.json()) as TripPlanResponse;
-      setTripPlan(normalizeResponse(payload.results));
+      console.log('✅ Response received from backend:', payload);
+      const normalizedPlan = normalizeResponse(payload.results);
+      console.log('📋 Normalized trip plan:', normalizedPlan);
+      setTripPlan(normalizedPlan);
     } catch (requestError) {
+      console.error('❌ Error occurred:', requestError);
       setTripPlan(null);
       setError(
         requestError instanceof Error
