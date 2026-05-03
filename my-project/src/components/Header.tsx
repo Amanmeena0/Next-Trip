@@ -1,6 +1,6 @@
 export function Header() {
   return (
-    <header className="fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b border-white/15 bg-primary/95 px-4 text-primary-foreground shadow-lift backdrop-blur-xl sm:h-18 sm:px-6 md:h-20 md:px-8">
+    <header className="bg-[#155e75] fixed top-0 z-50 flex h-16 w-full items-center justify-between border-b border-white/15 bg-primary/95 px-4 text-primary-foreground shadow-lift backdrop-blur-xl sm:h-18 sm:px-6 md:h-20 md:px-8">
       <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white shadow-soft sm:h-11 sm:w-11 md:h-12 md:w-12">
           <span className="text-xl sm:text-2xl">✈️</span>
